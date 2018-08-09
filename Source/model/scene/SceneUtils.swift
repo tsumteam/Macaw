@@ -17,7 +17,8 @@ class SceneUtils {
                           clip: from.clip,
                           effect: from.effect,
                           visible: from.visible,
-                          tag: from.tag)
+                          tag: from.tag,
+                          attributes: from.attributes)
 
         shape.touchPressedHandlers = from.touchPressedHandlers
         shape.touchMovedHandlers = from.touchMovedHandlers

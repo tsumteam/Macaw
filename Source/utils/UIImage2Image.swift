@@ -15,7 +15,7 @@ import UIKit
 var imagesMap = [String: MImage]()
 
 public extension MImage {
-    public func image( xAlign: Align = .min, yAlign: Align = .min, aspectRatio: AspectRatio = .none, w: Int = 0, h: Int = 0, place: Transform = Transform.identity, opaque: Bool = true, opacity: Double = 1, clip: Locus? = nil, effect: Effect? = nil, visible: Bool = true, tag: [String] = []) -> Image {
+    public func image( xAlign: Align = .min, yAlign: Align = .min, aspectRatio: AspectRatio = .none, w: Int = 0, h: Int = 0, place: Transform = Transform.identity, opaque: Bool = true, opacity: Double = 1, clip: Locus? = nil, effect: Effect? = nil, visible: Bool = true, tag: [String] = [], attributes: [String: String]) -> Image {
 
         var oldId: String?
         for key in imagesMap.keys where self === imagesMap[key] {
@@ -35,6 +35,7 @@ public extension MImage {
             clip: clip,
             effect: effect,
             visible: visible,
-            tag: tag)
+            tag: tag,
+            attributes: attributes)
     }
 }

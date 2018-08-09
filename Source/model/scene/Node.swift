@@ -51,6 +51,7 @@ open class Node: Drawable {
     open static func nodeBy(id: String) -> Node? {
         return Node.map.object(forKey: id as NSString)
     }
+  
 
     // MARK: - Searching
     public func nodeBy(tag: String) -> Node? {
@@ -63,6 +64,10 @@ open class Node: Drawable {
 
     public func nodesBy(tag: String) -> [Node] {
         return [nodeBy(tag: tag)].compactMap { $0 }
+    }
+  
+    public func parent() -> Node? {
+       return nodesMap.parents(self).first
     }
 
     // MARK: - Events
@@ -300,7 +305,7 @@ open class Node: Drawable {
         return !pinchHandlers.isEmpty
     }
 
-    public init(place: Transform = Transform.identity, opaque: Bool = true, opacity: Double = 1, clip: Locus? = nil, mask: Node? = nil, effect: Effect? = nil, visible: Bool = true, tag: [String] = []) {
+    public init(place: Transform = Transform.identity, opaque: Bool = true, opacity: Double = 1, clip: Locus? = nil, mask: Node? = nil, effect: Effect? = nil, visible: Bool = true, tag: [String] = [], attributes: [String: String]) {
         self.placeVar = AnimatableVariable<Transform>(place)
         self.opaqueVar = Variable<Bool>(opaque)
         self.opacityVar = AnimatableVariable<Double>(opacity)
@@ -311,7 +316,8 @@ open class Node: Drawable {
 
         super.init(
             visible: visible,
-            tag: tag
+            tag: tag,
+            attributes: attributes
         )
         self.placeVar.node = self
         self.opacityVar.node = self
