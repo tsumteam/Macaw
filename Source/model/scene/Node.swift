@@ -51,7 +51,6 @@ open class Node: Drawable {
     open static func nodeBy(id: String) -> Node? {
         return Node.map.object(forKey: id as NSString)
     }
-  
 
     // MARK: - Searching
     public func nodeBy(tag: String) -> Node? {
@@ -65,9 +64,9 @@ open class Node: Drawable {
     public func nodesBy(tag: String) -> [Node] {
         return [nodeBy(tag: tag)].compactMap { $0 }
     }
-  
+
     public func parent() -> Node? {
-       return nodesMap.parents(self).first
+        return nodesMap.parents(self).first
     }
 
     // MARK: - Events

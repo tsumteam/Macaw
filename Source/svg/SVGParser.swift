@@ -163,7 +163,7 @@ open class SVGParser {
     }
 
     fileprivate func parseNode(_ node: XMLIndexer, groupStyle: [String: String] = [:]) -> Node? {
-        var result: Node? = nil
+        var result: Node?
         if let element = node.element {
             switch element.name {
             case "g":
@@ -701,11 +701,11 @@ open class SVGParser {
         let id = element.allAttributes["id"]?.text
         return id != nil ? [id!] : []
     }
-  
+
     fileprivate func getAttributes(_ element: SWXMLHash.XMLElement) -> [String: String] {
-      let attributes = element.allAttributes.mapValues({ $0.text })
-  
-      return attributes
+        let attributes = element.allAttributes.mapValues({ $0.text })
+
+        return attributes
     }
 
     fileprivate func getOpacity(_ styleParts: [String: String]) -> Double {
@@ -1478,10 +1478,10 @@ open class SVGParser {
             return Shape(form: shape.form, fill: shape.fill, stroke: shape.stroke, place: pos, opaque: opaque, clip: clip, visible: visible, tag: tag, attributes: attributes)
         }
         if let text = referenceNode as? Text {
-          return Text(text: text.text, font: text.font, fill: text.fill, stroke: text.stroke, align: text.align, baseline: text.baseline, place: pos, opaque: opaque, clip: clip, visible: visible, tag: tag, attributes: attributes)
+            return Text(text: text.text, font: text.font, fill: text.fill, stroke: text.stroke, align: text.align, baseline: text.baseline, place: pos, opaque: opaque, clip: clip, visible: visible, tag: tag, attributes: attributes)
         }
         if let image = referenceNode as? Image {
-          return Image(src: image.src, xAlign: image.xAlign, yAlign: image.yAlign, aspectRatio: image.aspectRatio, w: image.w, h: image.h, place: pos, opaque: opaque, clip: clip, visible: visible, tag: tag, attributes: attributes)
+            return Image(src: image.src, xAlign: image.xAlign, yAlign: image.yAlign, aspectRatio: image.aspectRatio, w: image.w, h: image.h, place: pos, opaque: opaque, clip: clip, visible: visible, tag: tag, attributes: attributes)
         }
         if let group = referenceNode as? Group {
             var contents = [Node]()
@@ -1490,7 +1490,7 @@ open class SVGParser {
                     contents.append(copy)
                 }
             }
-          return Group(contents: contents, place: pos, opaque: opaque, clip: clip, visible: visible, tag: tag, attributes: attributes)
+            return Group(contents: contents, place: pos, opaque: opaque, clip: clip, visible: visible, tag: tag, attributes: attributes)
         }
         return .none
     }

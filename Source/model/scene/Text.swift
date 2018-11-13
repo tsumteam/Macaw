@@ -74,8 +74,8 @@ open class Text: Node {
         } else {
             font = MFont.systemFont(ofSize: MFont.mSystemFontSize)
         }
-        var stringAttributes: [NSAttributedStringKey: AnyObject] = [:]
-        stringAttributes[NSAttributedStringKey.font] = font
+        var stringAttributes: [NSAttributedString.Key: AnyObject] = [:]
+        stringAttributes[NSAttributedString.Key.font] = font
         let size = (text as NSString).size(withAttributes: stringAttributes)
         return Rect(
             x: calculateAlignmentOffset(font: font),
@@ -117,7 +117,7 @@ open class Text: Node {
 
     fileprivate func calculateAlignmentOffset(font: MFont) -> Double {
         let textAttributes = [
-            NSAttributedStringKey.font: font
+            NSAttributedString.Key.font: font
         ]
         let textSize = NSString(string: text).size(withAttributes: textAttributes)
         return -align.align(size: textSize.width.doubleValue)

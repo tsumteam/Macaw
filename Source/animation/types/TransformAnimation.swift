@@ -5,7 +5,7 @@ internal class TransformAnimation: AnimationImpl<Transform> {
     convenience init(animatedNode: Node, startValue: Transform, finalValue: Transform, animationDuration: Double, delay: Double = 0.0, autostart: Bool = false, fps: UInt = 30) {
 
         let interpolationFunc = { (t: Double) -> Transform in
-            return startValue.interpolate(finalValue, progress: t)
+            startValue.interpolate(finalValue, progress: t)
         }
 
         self.init(animatedNode: animatedNode, valueFunc: interpolationFunc, animationDuration: animationDuration, delay: delay, autostart: autostart, fps: fps)
@@ -36,7 +36,7 @@ internal class TransformAnimation: AnimationImpl<Transform> {
         let factory = { () -> (Double) -> Transform in
             let original = self.timeFactory()
             return { (t: Double) -> Transform in
-                return original(1.0 - t)
+                original(1.0 - t)
             }
         }
 
@@ -76,8 +76,7 @@ public extension AnimatableVariable where T: TransformInterpolation {
         }
 
         let origin = node!.place
-        let factory = { () -> (Double) -> Transform in
-            return { (t: Double) in return origin.interpolate(to, progress: t) }
+        let factory = { () -> (Double) -> Transform in { (t: Double) in origin.interpolate(to, progress: t) }
         }
         return TransformAnimation(animatedNode: self.node!, factory: factory, animationDuration: during, delay: delay)
     }
@@ -89,26 +88,25 @@ public extension AnimatableVariable where T: TransformInterpolation {
     public func animation(angle: Double, x: Double? = .none, y: Double? = .none, during: Double = 1.0, delay: Double = 0.0) -> Animation {
         let bounds = node!.bounds!
 
-        let factory = { () -> (Double) -> Transform in
-            return { t in
-                let asin = sin(angle * t); let acos = cos(angle * t)
+        let factory = { () -> (Double) -> Transform in { t in
+            let asin = sin(angle * t); let acos = cos(angle * t)
 
-                let rotation = Transform(
-                    m11: acos, m12: -asin,
-                    m21: asin, m22: acos,
-                    dx: 0.0, dy: 0.0
-                )
+            let rotation = Transform(
+                m11: acos, m12: -asin,
+                m21: asin, m22: acos,
+                dx: 0.0, dy: 0.0
+            )
 
-                let move = Transform.move(
-                    dx: x ?? bounds.w / 2.0,
-                    dy: y ?? bounds.h / 2.0
-                )
+            let move = Transform.move(
+                dx: x ?? bounds.w / 2.0,
+                dy: y ?? bounds.h / 2.0
+            )
 
-                let t1 = move.concat(with: rotation)
-                let t2 = t1.concat(with: move.invert()!)
-                let result = t1.concat(with: t2)
+            let t1 = move.concat(with: rotation)
+            let t2 = t1.concat(with: move.invert()!)
+            let result = t1.concat(with: t2)
 
-                return result
+            return result
             }
         }
 

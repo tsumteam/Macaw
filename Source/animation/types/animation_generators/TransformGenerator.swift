@@ -113,7 +113,7 @@ func transformAnimationByFunc(_ node: Node, valueFunc: (Double) -> Transform, du
     transformAnimation.duration = duration
     transformAnimation.values = transformValues
     transformAnimation.keyTimes = timeValues as [NSNumber]?
-    transformAnimation.fillMode = kCAFillModeForwards
+    transformAnimation.fillMode = CAMediaTimingFillMode.forwards
     transformAnimation.isRemovedOnCompletion = false
 
     return transformAnimation
